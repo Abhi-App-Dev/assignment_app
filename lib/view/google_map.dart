@@ -31,25 +31,15 @@ class _GoogleMapWithMarkerState
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
   final Set<Marker> _marker = {};
-  Set<Polygon> _polygon = HashSet<Polygon>();
-
-  // List<LatLng> points = [
-  //   LatLng(33.2464654, 58.146546546),
-  //   LatLng(33.2464654, 58.142424),
-  //   LatLng(32.2464654, 57.146546546),
-  //   LatLng(33.2464654, 58.146546546),
-  //   LatLng(33.2464654, 58.146546546),
-  //   LatLng(33.2464654, 58.146546546),
-  // ];
-
+  final Set<Polygon> _polygon = HashSet<Polygon>();
   final LocationController locationController =
       Get.put(LocationController());
 
   @override
   void initState() {
-    _polygon.add(Polygon(
-      polygonId: const PolygonId("1"),
-      points: locationController.currentLocationLatLngList,
+    _polygon.add(const Polygon(
+      polygonId: PolygonId("1"),
+      points: [],
       fillColor: Colors.blueGrey,
       geodesic: true,
       strokeWidth: 2,
@@ -66,11 +56,12 @@ class _GoogleMapWithMarkerState
           initialCameraPosition: CameraPosition(
             // target: LatLng(33.2464654, 58.146546546),
             target: LatLng(
-                locationController
-                    .currentLocationLatLngList[0].latitude,
-                locationController
-                    .currentLocationLatLngList[0]
-                    .longitude),
+                double.parse(locationController
+                    .currentLocationLatLngList[0].lat
+                    .toString()),
+                double.parse(locationController
+                    .currentLocationLatLngList[0].lng
+                    .toString())),
             zoom: 20,
           ),
           myLocationButtonEnabled: true,
